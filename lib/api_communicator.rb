@@ -4,10 +4,18 @@ require 'pry'
 # require 'mtg_sdk'
 
 def get_cards_from_api
-  url = 'https://api.magicthegathering.io/v1/cards'
-  response = RestClient.get(url)
-  cards_hash = JSON.parse(response)
-  cards_hash["cards"]
+    # for seed
+    # (1..311).each do |page_num|
+    #       url = 'https://api.magicthegathering.io/v1/cards?page=#{page_num}'
+          # response = RestClient.get(url)
+          # cards_hash = JSON.parse(response)
+          # cards_hash["cards"].each do |card_hash|
+    url = 'https://api.magicthegathering.io/v1/cards'
+    response = RestClient.get(url)
+    cards_hash = JSON.parse(response)
+    cards_hash["cards"]
+  # End loop
+
 end
 
 
