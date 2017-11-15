@@ -22,7 +22,6 @@ def get_name_from_user
   puts "please enter a card name"
   name = gets.chomp
   name
-  # use gets to capture the user's input. This method should return that input, downcased.
 end
 
 
