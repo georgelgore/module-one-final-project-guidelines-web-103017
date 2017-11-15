@@ -7,9 +7,18 @@ def get_cards_from_api
   url = 'https://api.magicthegathering.io/v1/cards'
   response = RestClient.get(url)
   cards_hash = JSON.parse(response)
+  cards_hash["cards"]
+end
+
+
+def search_by_name(card_name)
+  cards = get_cards_from_api
+  puts cards.find{|card| card["name"] == "#{card_name}"}
 
 end
 
+# search_by_name("Bosom Buddy")
+# search_by_name("Cheap Ass")
 # cards = MTG::Card.where(name: 'avacyn').all
 
 
