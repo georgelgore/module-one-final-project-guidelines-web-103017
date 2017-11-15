@@ -7,12 +7,10 @@ def get_cards_from_api
   url = 'https://api.magicthegathering.io/v1/cards'
   response = RestClient.get(url)
   recipe_hash = JSON.parse(response)
-  binding.pry
-
+  
 end
 
 # cards = MTG::Card.where(name: 'avacyn').all
-get_cards_from_api
 
 
 #
