@@ -1,28 +1,34 @@
 require 'rest-client'
 require 'json'
 require 'pry'
+
 # require 'mtg_sdk'
 
-def get_cards_from_api
-    # for seed
-    # (1..311).each do |page_num|
-    #       url = 'https://api.magicthegathering.io/v1/cards?page=#{page_num}'
-          # response = RestClient.get(url)
-          # cards_hash = JSON.parse(response)
-          # cards_hash["cards"].each do |card_hash|
-    url = 'https://api.magicthegathering.io/v1/cards'
-    response = RestClient.get(url)
-    cards_hash = JSON.parse(response)
-    cards_hash["cards"]
-  # End loop
-
-end
+# def get_cards_from_api
+#     # for seed
+#     # (1..311).each do |page_num|
+#     #       url = 'https://api.magicthegathering.io/v1/cards?page=#{page_num}'
+#           # response = RestClient.get(url)
+#           # cards_hash = JSON.parse(response)
+#           # cards_hash["cards"].each do |card_hash|
+#     url = 'https://api.magicthegathering.io/v1/cards'
+#     response = RestClient.get(url)
+#     cards_hash = JSON.parse(response)
+#     cards_hash["cards"]
+#   # End loop
+#
+# end
 
 
 def search_by_name(card_name)
-  cards = get_cards_from_api
-  puts cards.find{|card| card["name"] == "#{card_name}"}
-
+  card = Card.find_by(name: card_name)
+  puts "Name: #{card.name}"
+  puts "Mana Cost: #{card.manaCost}"
+  puts "Mana cost total: #{card.cmc}"
+  puts "Colors: #{card.colors}"
+  puts "Type: #{card.types}"
+  puts "Subtypes: #{card.subtypes}"
+  puts "Text: #{card.text}"
 end
 
 # search_by_name("Bosom Buddy")
