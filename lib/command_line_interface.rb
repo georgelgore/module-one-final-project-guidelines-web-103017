@@ -3,12 +3,18 @@ def welcome
   puts "Welcome!"
 end
 
+def main_menu
+  puts "Welcome to Gathered, a Magic the Gathering Deckbuilder"
+  puts "Please select a number:"
+end
+
 # Provide search options
 def choose_search
-  puts "1. Search By Name"
+  puts "1. Search Cards"
+  puts "2. Build a Deck"
   input = gets.chomp
   input
-  
+
 end
 
 # gets.chomp the card name
@@ -17,4 +23,10 @@ def get_name_from_user
   name = gets.chomp
   name
   # use gets to capture the user's input. This method should return that input, downcased.
+end
+
+
+##### UNDER DEVELOPMENT #####
+def under_development
+  puts "Option under development!"
 end
