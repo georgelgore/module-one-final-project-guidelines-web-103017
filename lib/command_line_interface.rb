@@ -1,6 +1,5 @@
 #### WELCOME METHODS ####
-
-
+USER= []
 # Welcome, get user name
 def welcome_menu
   puts "Welcome to Gathered, a Magic the Gathering Deckbuilder"
@@ -9,6 +8,7 @@ def welcome_menu
   user = User.find_or_create_by(name: full_name)
   puts "Hello, #{user.name}! What would you like to do?"
   user
+  USER << user
 end
 
 # Provide search options
@@ -57,7 +57,7 @@ def search_cards_menu_reader(input)
   when "1"
     search_cards_by_name
   when "2"
-    # call search cards by multiple attributes
+    search_cards_by_multiple_attrs
   when "3"
     puts "------------------"
     main_menu
@@ -74,13 +74,45 @@ def search_cards_by_name
   puts "~~~~~~~~~~~~~~~~~~"
   puts "Type the name of the card that you wish to find"
   input = gets.chomp
-  card = search_by_name(input)
+  search_by_name(input)
+end
+
+def search_cards_by_name
+  puts "~~~~~~~~~~~~~~~~~~"
+  puts "Type the name of the card that you wish to find"
+  input = gets.chomp
+  search_by_name(input)
 end
 
 
+def save_searched_card(card)
+  puts "Would you like to save #{card.name}?"
+  puts "    --1. Yes"
+  puts "    --2. No"
+  input = gets.chomp
+  save_searched_card_reader(input, card)
+end
 
 
-
+def save_searched_card_reader(input, card)
+  case input
+  when "1"
+    #binding.pry
+    UserCard.find_or_create_by(user_id: USER.first.id, card_id: card.id)
+    puts "Card has been added"
+    search_cards_menu
+  when "2"
+    search_cards_menu
+  when "3"
+    puts "------------------"
+    main_menu
+  when "exit"
+    exit
+  else
+    puts "Input not recognized, please enter a number between 1 and 3."
+    search_cards_menu
+  end
+end
 
 #### SEARCHES ####
 
@@ -98,13 +130,6 @@ def search_by_name(input)
   save_searched_card(card)
 end
 
-def save_searched_card(card)
-  puts "Would you like to save #{card.name}?"
-  puts "    --1. Yes"
-  puts "    --2. No"
-  input = gets.chomp
-  save_searched_card_reader(input)
-end
 
 
 ##### HELPER #####
