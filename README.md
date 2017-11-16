@@ -1,4 +1,4 @@
-Gathered: Magic the Gathering Deckbuilder
+#Gathered: Magic the Gathering Deckbuilder
 
 Welcome to Gathered! A Magic the Gathering Deckbuilder.
 
@@ -8,21 +8,21 @@ We have additionally created a function whereby a user is able to create and sav
 
 Finally, we have given the user the ability to view his or her cards and decks!
 
-Installation
+#Installation
 
 Download this file from Github and enter 'ruby bin/run.rb' to to run the CLI.
 
-Contributors Guide
+#Contributors Guide
 
 This project adheres to the Open Code of Conduct. By participating, you are expected to honor this code.
 
 
-Contributors
+#Contributors
 
 Joshua Wasserman: joshua.wasserman@flatironschool.com
 George Gore: george.gore@flatironschool.com
 
-License
+#License
 
 Copyright <2017> <Joshua Wasserman> <George Gore>
 
