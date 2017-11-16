@@ -12,6 +12,7 @@ def welcome_menu
   puts ""
   puts "Hello, #{user.name}! What would you like to do?"
   user
+  USER.clear
   USER << user
 end
 
@@ -21,6 +22,8 @@ def main_menu
   puts "Main Menu:"
   puts "  1. Search Cards"
   puts "  2. Build a Deck"
+  puts "  3. My Cards"
+  puts "  4. My Decks"
   puts ""
   puts "  Type 'exit' to quit"
   puts ""
@@ -37,6 +40,9 @@ def main_menu_reader(input)
     #call search cards menu
   when "2"
     # call deck builder menu
+    main_menu
+  when "3"
+    main_menu
   when "exit"
     exit
   else
@@ -47,7 +53,9 @@ end
 
 # Display the search cards menu
 def search_cards_menu
-  puts "------------------"
+  puts ""
+  puts "------------------------------------------------"
+  puts ""
   puts "Search Cards Menu:"
   puts "  -1. Search by Name"
   puts "  -2. Search Creatures by Type"
@@ -55,7 +63,7 @@ def search_cards_menu
   puts "  -4. Search Sorceries by Color"
   puts "  -5. Return to Main Menu"
   puts ""
-  puts "  Type 'exit' to quit"
+  puts "  Type 'exit' to quit or 'back' to go back at any time"
   puts ""
 
   input = gets.chomp
@@ -74,10 +82,14 @@ def search_cards_menu_reader(input)
   when "4"
     search_sorcery_cards
   when "5"
-    puts "------------------"
+    puts ""
+    puts "------------------------------------------------"
+    puts ""
     main_menu
   when "exit"
     exit
+  when "back"
+    main_menu
   else
     puts "Input not recognized, please enter a valid number."
     puts ""
@@ -88,15 +100,19 @@ end
 ######## SEARCH and SAVE MENUS ##########
 # Search cards by name
 def search_cards_by_name
-  puts "~~~~~~~~~~~~~~~~~~"
-  puts "Type the name of the card that you wish to find"
+  puts ""
+  puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  puts ""
+  puts "Type the name of the card that you wish to find?"
   puts ""
   input = gets.chomp
   search_by_name(input)
 end
 
 def search_creature_cards
-  puts "~~~~~~~~~~~~~~~~~~"
+  puts ""
+  puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  puts ""
   puts "What Creature type would you like to find?"
   puts ""
   subtype = gets.chomp
@@ -105,7 +121,9 @@ def search_creature_cards
 end
 
 def search_instant_cards
-  puts "~~~~~~~~~~~~~~~~~~"
+  puts ""
+  puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  puts ""
   puts "What color of Instant cards would you like to find?"
   puts ""
   color = gets.chomp
@@ -113,7 +131,9 @@ def search_instant_cards
 end
 
 def search_sorcery_cards
-  puts "~~~~~~~~~~~~~~~~~~"
+  puts ""
+  puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  puts ""
   puts "What color of Sorcery cards would you like to find?"
   puts ""
   color = gets.chomp
@@ -146,7 +166,9 @@ def save_searched_card_reader(input, card)
     search_cards_menu
 
   when "3"
-    puts "------------------"
+    puts ""
+    puts "------------------------------------------------"
+    puts ""
     main_menu
 
   when "exit"
@@ -160,8 +182,10 @@ end
 ########  SEARCH METHODS #########
 
 def search_by_name(name)
-  input = name
-  if Card.find_by(name: input)
+  if name.downcase == "back"
+    search_cards_menu
+  elsif Card.find_by(name: input)
+    input = name
     card = Card.find_by(name: input)
   #binding.pry
     puts "Name: #{card.name}"
@@ -182,7 +206,9 @@ end
 
 def search_creature_by_type(type)
   input = type.capitalize
-  if Card.where(subtype1: input)
+  if type.downcase == "back"
+    search_cards_menu
+  elsif Card.where(subtype1: input)
     creatures = Card.where(subtype1: input)
     puts "Results: #{creatures.count}"
     puts ""
@@ -191,11 +217,12 @@ def search_creature_by_type(type)
     number = gets.chomp
     puts "Name: Color, Convered Mana Cost, (P/T)"
     puts ""
-    creatures[0..number.to_i].each{|card| puts "#{card.name}: #{card.color1}, #{card.cmc}, (#{card.power}/#{card.toughness})"}
+    creatures[0...number.to_i].each{|card| puts "#{card.name}: #{card.color1}, #{card.cmc}, (#{card.power}/#{card.toughness})"}
     puts ""
     puts ""
     search_cards_menu
   else
+    puts ""
     puts "Sorry we could not find that card! Search again!"
     puts ""
     search_creature_cards
@@ -204,7 +231,9 @@ end
 
 def search_instants_by_color(color)
   input = color.capitalize
-  if Card.where(types: "Instant", color1: color)
+  if color.downcase == "back"
+    search_cards_menu
+  elsif Card.where(types: "Instant", color1: color)
     instants = Card.where(types: "Instant", color1: color)
     puts "Results: #{instants.count}"
     puts ""
@@ -213,11 +242,12 @@ def search_instants_by_color(color)
     number = gets.chomp
     puts "Name: Color, Convered Mana Cost"
     puts ""
-    instants[0..number.to_i].each{|card| puts "#{card.name}: #{card.color1}, #{card.cmc}"}
+    instants[0...number.to_i].each{|card| puts "#{card.name}: #{card.color1}, #{card.cmc}"}
     puts ""
     puts ""
     search_cards_menu
   else
+    puts ""
     puts "Sorry we could not find that card! Search again!"
     puts ""
     search_instant_cards
@@ -226,7 +256,9 @@ end
 
 def search_sorcery_by_color(color)
   input = color.capitalize
-  if Card.where(types: "Sorcery", color1: color)
+  if color.downcase == "back"
+    search_cards_menu
+  elsif Card.where(types: "Sorcery", color1: color)
     sorceries = Card.where(types: "Sorcery", color1: color)
     puts "Results: #{sorceries.count}"
     puts ""
@@ -235,11 +267,12 @@ def search_sorcery_by_color(color)
     number = gets.chomp
     puts "Name: Color, Convered Mana Cost"
     puts ""
-    sorceries[0..number.to_i].each{|card| puts "#{card.name}: #{card.color1}, #{card.cmc}"}
+    sorceries[0...number.to_i].each{|card| puts "#{card.name}: #{card.color1}, #{card.cmc}"}
     puts ""
     puts ""
     search_cards_menu
   else
+    puts ""
     puts "Sorry we could not find that card! Search again!"
     puts ""
     search_sorcery_cards
