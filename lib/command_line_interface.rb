@@ -41,7 +41,7 @@ def main_menu_reader(input)
     #call search cards menu
   when "2"
     # call deck builder menu
-    main_menu
+    display_decks
   when "3"
     main_menu
   when "exit"
@@ -105,11 +105,8 @@ def deck_builder_menu
   puts "------------------------------------------------"
   puts ""
   puts "Search Deckbuilder Menu:"
-  puts "  -1. Create or Find a Deck by Name"
-  puts "  -2. Display Decks"
-  puts "  -3. Edit Decks"
-  puts "  -4. Mass Build a Deck"
-  puts "  -5. Return to Main Menu"
+  puts "  -1."
+  puts "  -5. Return to Decks List"
   puts ""
   puts "  Type 'exit' to quit or 'back' to go back at any time"
   puts ""
@@ -118,7 +115,37 @@ def deck_builder_menu
   search_cards_menu_reader(input)
 end
 
+# Displays the user's decks
+def display_decks
+  puts ""
+  puts "Your Decks: "
+  puts ""
+  if USER.first.decks.empty?
+    puts "1. Enter a Deck Name"
+    deck_name = gets.chomp
+    deck = Deck.create(name: deck_name, user_id: USER.first.id)
+    DECK.clear
+    DECK << deck
+    deck_builder_menu
+  else
+    puts "Select a Deck by Indicating the Number."
+    puts ""
+    USER.first.decks.each_with_index{|deck, i| puts "#{i+1}. #{deck.name}"}
+    input = gets.chomp
+    display_decks_reader(input)
+  end
+end
+
+def display_decks_reader(input)
+  number = input.to_i - 1
+  DECK.clear
+  DECK << USER.first.decks[number]
+  deck_builder_menu
+end
+
 ######## SEARCH and SAVE MENUS ##########
+
+
 # Search cards by name
 def search_cards_by_name
   puts ""
