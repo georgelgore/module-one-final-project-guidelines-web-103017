@@ -3,13 +3,15 @@ class CreateCards < ActiveRecord::Migration[5.0]
     create_table :cards do |t|
       t.string :name
       t.string :manaCost
-      t.integer :cmc
-      t.string :colors
-      t.string :types
-      t.string :subtypes
+      t.string :cmc
+      t.string :color1
+      t.string :color2
+      t.string :type
+      t.string :subtype1
+      t.string :subtype2
       t.text :text
-      t.integer :power
-      t.integer :toughness
+      t.string :power
+      t.string :toughness
     end
   end
 end

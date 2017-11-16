@@ -13,15 +13,17 @@
 ActiveRecord::Schema.define(version: 20171115152353) do
 
   create_table "cards", force: :cascade do |t|
-    t.string  "name"
-    t.string  "manaCost"
-    t.integer "cmc"
-    t.string  "colors"
-    t.string  "types"
-    t.string  "subtypes"
-    t.text    "text"
-    t.integer "power"
-    t.integer "toughness"
+    t.string "name"
+    t.string "manaCost"
+    t.string "cmc"
+    t.string "color1"
+    t.string "color2"
+    t.string "type"
+    t.string "subtype1"
+    t.string "subtype2"
+    t.text   "text"
+    t.string "power"
+    t.string "toughness"
   end
 
   create_table "deck_cards", force: :cascade do |t|
@@ -32,7 +34,6 @@ ActiveRecord::Schema.define(version: 20171115152353) do
   create_table "decks", force: :cascade do |t|
     t.string  "name"
     t.integer "user_id"
-    t.integer "rating"
   end
 
   create_table "user_cards", force: :cascade do |t|
