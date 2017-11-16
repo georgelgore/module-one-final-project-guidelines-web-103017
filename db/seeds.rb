@@ -15,14 +15,14 @@ require 'pry'
         cmc = card_hash['cmc']
         color1 = card_hash['colors'].first
         color2 = card_hash['colors'].last
-        type = card_hash['types'].first
+        types = card_hash['types'].first
         subtype1 = card_hash['subtypes'].first
         subtype2 = card_hash['subtypes'].last
         text = card_hash['text'].split("\n").join(" ")
         power = card_hash['power']
         toughness = card_hash['toughness']
 
-        Card.create(name: name, manaCost: manaCost, cmc: cmc, color1: color1, color2: color2, type: type, subtype1: subtype1, subtype2: subtype2, text: text, power: power, toughness: toughness)
+        Card.create(name: name, manaCost: manaCost, cmc: cmc, color1: color1, color2: color2, types: types, subtype1: subtype1, subtype2: subtype2, text: text, power: power, toughness: toughness)
       end
 
     end
