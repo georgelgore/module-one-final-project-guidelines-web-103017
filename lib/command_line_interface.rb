@@ -107,14 +107,66 @@ def deck_builder_menu
   puts "Search Deckbuilder Menu:"
   puts "  -1. See Cards in Deck"
   puts "  -2. Add Card to Deck"
-  puts "  -3. Mass Add Cards to Deck"
-  puts "  -5. Return to Decks List"
+  puts "  -3. Add Instant Cards"
+  puts "  -4. Return to Decks List"
   puts ""
   puts "  Type 'exit' to quit or 'back' to go back at any time"
   puts ""
 
   input = gets.chomp
-  search_cards_menu_reader(input)
+  deck_builder_menu_reader(input)
+end
+
+def deck_builder_menu_reader(input)
+  case input
+  when "1"
+    view_deck_cards
+  when "2"
+    add_card_to_deck
+  when "3"
+    # add instant cards
+  when "4"
+    puts ""
+    puts "------------------------------------------------"
+    puts ""
+  when "exit"
+    exit
+  when "back"
+    main_menu
+  else
+    puts "Input not recognized, please enter a valid number."
+    puts ""
+    search_cards_menu
+  end
+
+end
+
+def view_deck_cards
+  deck_name = DECK.first.name
+  deck = Deck.find_by(name: deck_name )
+  cards = deck.cards
+  #binding.pry
+  cards.each{|card| puts "#{card.name} --> #{card.color1}, #{card.types}"}
+  deck_builder_menu
+end
+
+def add_card_to_deck
+  puts ""
+  puts "Add a card by name."
+  puts ""
+  name = gets.chomp
+  if name.downcase == "back"
+    deck_builder_menu
+  elsif Card.find_by(name: name)
+    input = name
+    card = Card.find_by(name: input)
+    DeckCard.create(deck_id: DECK.first.id, card_id: card.id)
+  else
+    puts "Sorry we could not find that card! Try again!"
+    puts ""
+    add_card_to_deck
+  end
+  deck_builder_menu
 end
 
 # Displays the user's decks
@@ -125,24 +177,42 @@ def display_decks
   if USER.first.decks.empty?
     puts "1. Enter a Deck Name"
     deck_name = gets.chomp
-    deck = Deck.create(name: deck_name, user_id: USER.first.id)
+    user_name = USER.first.name
+    user = User.find_by(name: user_name)
+    deck = Deck.create(name: deck_name, user_id: user.id)
     DECK.clear
     DECK << deck
     deck_builder_menu
   else
-    puts "Select a Deck by Indicating the Number."
+    puts "Select a Deck by Indicating the Number"
+    puts "or Create a New Deck by Typing its Name."
     puts ""
-    USER.first.decks.each_with_index{|deck, i| puts "#{i+1}. #{deck.name}"}
+    user_name = USER.first.name
+    user = User.find_by(name: user_name)
+    user.decks.each_with_index{|deck, i| puts "#{i+1}. #{deck.name}"}
+
+    #puts USER.first.decks
     input = gets.chomp
     display_decks_reader(input)
   end
 end
 
 def display_decks_reader(input)
-  number = input.to_i - 1
-  DECK.clear
-  DECK << USER.first.decks[number]
-  deck_builder_menu
+  #binding.pry
+  if input.length <= 2
+  #  binding.pry
+    number = input.to_i - 1
+    DECK.clear
+    DECK << USER.first.decks[number]
+    deck_builder_menu
+  else
+    deck_name = input
+  #  binding.pry
+    deck = Deck.create(name: deck_name, user_id: USER.first.id)
+    DECK.clear
+    DECK << deck
+    deck_builder_menu
+  end
 end
 
 ######## SEARCH and SAVE MENUS ##########
