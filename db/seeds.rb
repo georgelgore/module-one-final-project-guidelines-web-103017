@@ -15,7 +15,7 @@ require 'pry'
         cmc = card_hash['cmc']
         color1 = card_hash['colors'].first
         color2 = card_hash['colors'].last
-        type = card_hash['types']
+        type = card_hash['types'].first
         subtype1 = card_hash['subtypes'].first
         subtype2 = card_hash['subtypes'].last
         text = card_hash['text'].split("\n").join(" ")
