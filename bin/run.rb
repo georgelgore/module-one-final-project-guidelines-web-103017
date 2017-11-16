@@ -18,4 +18,5 @@ require_relative '../lib/command_line_interface.rb'
 #   end
 # end
 
+user = welcome_menu
 main_menu
