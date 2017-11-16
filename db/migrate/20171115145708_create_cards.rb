@@ -6,7 +6,7 @@ class CreateCards < ActiveRecord::Migration[5.0]
       t.string :cmc
       t.string :color1
       t.string :color2
-      t.string :type
+      t.string :types
       t.string :subtype1
       t.string :subtype2
       t.text :text

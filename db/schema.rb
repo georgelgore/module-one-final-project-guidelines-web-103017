@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20171115152353) do
     t.string "cmc"
     t.string "color1"
     t.string "color2"
-    t.string "type"
+    t.string "types"
     t.string "subtype1"
     t.string "subtype2"
     t.text   "text"

@@ -3,7 +3,7 @@ require 'json'
 require 'pry'
 
 
-    (0..100).each do |page_num|
+    (301..311).each do |page_num|
 
       url = "https://api.magicthegathering.io/v1/cards?page=#{page_num}"
       response = RestClient.get(url)
@@ -13,12 +13,12 @@ require 'pry'
         name = card_hash['name']
         manaCost = card_hash['manaCost']
         cmc = card_hash['cmc']
-        color1 = card_hash['colors'].first
-        color2 = card_hash['colors'].last
-        types = card_hash['types'].first
-        subtype1 = card_hash['subtypes'].first
-        subtype2 = card_hash['subtypes'].last
-        text = card_hash['text'].split("\n").join(" ")
+        color1 = card_hash['colors'].first if card_hash['colors']
+        color2 = card_hash['colors'].last if card_hash['colors']
+        types = card_hash['types'].first if card_hash['types']
+        subtype1 = card_hash['subtypes'].first if card_hash['subtypes']
+        subtype2 = card_hash['subtypes'].last if card_hash['subtypes']
+        text = card_hash['text'].split("\n").join(" ") if card_hash['text']
         power = card_hash['power']
         toughness = card_hash['toughness']
 
