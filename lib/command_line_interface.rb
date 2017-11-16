@@ -1,5 +1,6 @@
 #### WELCOME METHODS ####
 USER= []
+DECK = []
 # Welcome, get user name
 def welcome_menu
   puts ""
@@ -95,6 +96,26 @@ def search_cards_menu_reader(input)
     puts ""
     search_cards_menu
   end
+end
+
+# Display the deck builder menu
+
+def deck_builder_menu
+  puts ""
+  puts "------------------------------------------------"
+  puts ""
+  puts "Search Deckbuilder Menu:"
+  puts "  -1. Create or Find a Deck by Name"
+  puts "  -2. Display Decks"
+  puts "  -3. Edit Decks"
+  puts "  -4. Mass Build a Deck"
+  puts "  -5. Return to Main Menu"
+  puts ""
+  puts "  Type 'exit' to quit or 'back' to go back at any time"
+  puts ""
+
+  input = gets.chomp
+  search_cards_menu_reader(input)
 end
 
 ######## SEARCH and SAVE MENUS ##########
