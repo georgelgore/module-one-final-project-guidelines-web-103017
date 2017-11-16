@@ -21,7 +21,8 @@ require 'pry'
         text = card_hash['text'].split("\n").join(" ")
         power = card_hash['power']
         toughness = card_hash['toughness']
-        Card.create(name: name, manaCost: manaCost, cmc: cmc, colors: colors, types: types, subtypes: subtypes, text: text, power: power, toughness: toughness)
+        
+        Card.create(name: name, manaCost: manaCost, cmc: cmc, color1: color1, color2: color2, types: types, subtype1: subtype1, subtype2: subtype2, text: text, power: power, toughness: toughness)
       end
 
     end
