@@ -23,8 +23,8 @@ def main_menu
   puts "Main Menu:"
   puts "  1. Search Cards"
   puts "  2. Build a Deck"
-  puts "  3. My Cards"
-  puts "  4. My Decks"
+  puts "  3. My Saved Cards"
+  puts "  4. Interesting Data"
   puts ""
   puts "  Type 'exit' to quit"
   puts ""
@@ -43,7 +43,9 @@ def main_menu_reader(input)
     # call deck builder menu
     display_decks
   when "3"
-    main_menu
+    show_user_cards
+  when "4"
+    interesting_data
   when "exit"
     exit
   else
@@ -247,6 +249,49 @@ def display_decks_reader(input)
   end
 end
 
+
+def interesting_data
+  puts ""
+  puts "------------------------------------------------"
+  puts ""
+  puts "Search Interesting Data:"
+  puts "  -1. Most Popular Color"
+  puts "  -2. Main Menu "
+  puts ""
+  puts "  Type 'exit' to quit or 'back' to go back at any time"
+  puts ""
+
+  input = gets.chomp
+  interesting_data_reader(input)
+
+end
+
+def interesting_data_reader(input)
+  case input
+  when "1"
+    blue = Card.where(color1: "Blue").count
+    white = Card.where(color1: "White").count
+    black = Card.where(color1: "Black").count
+    red = Card.where(color1: "Red").count
+    green = Card.where(color1: "Green").count
+    puts ""
+    puts "Most Popular Color & Totals:"
+    puts "White: #{white}"
+    puts "Blue: #{blue}"
+    puts "Black: #{black}"
+    puts "Red: #{red}"
+    puts "Green: #{green}"
+    puts ""
+    interesting_data
+
+  when "2"
+    main_menu
+  else
+    puts "Input not recognized, please enter a valid number."
+    puts ""
+    search_cards_menu
+  end
+end
 ######## SEARCH and SAVE MENUS ##########
 
 
@@ -331,12 +376,23 @@ def save_searched_card_reader(input, card)
   end
 end
 
+def show_user_cards
+  user_name = USER.first.name
+  user = User.find_by(name: user_name)
+  cards = user.cards
+  puts ""
+  puts "Saved Cards:"
+  puts ""
+  cards.each{|card| puts "    #{card.name}"}
+  main_menu
+end
+
 ########  SEARCH METHODS #########
 
 def search_by_name(name)
   if name.downcase == "back"
     search_cards_menu
-  elsif Card.find_by(name: input)
+  elsif Card.find_by(name: name)
     input = name
     card = Card.find_by(name: input)
   #binding.pry
@@ -385,8 +441,8 @@ def search_instants_by_color(color)
   input = color.capitalize
   if color.downcase == "back"
     search_cards_menu
-  elsif Card.where(types: "Instant", color1: color)
-    instants = Card.where(types: "Instant", color1: color)
+  elsif Card.where(types: "Instant", color1: input)
+    instants = Card.where(types: "Instant", color1: input)
     puts "Results: #{instants.count}"
     puts ""
     puts "How many would you like to see?"
@@ -410,8 +466,8 @@ def search_sorcery_by_color(color)
   input = color.capitalize
   if color.downcase == "back"
     search_cards_menu
-  elsif Card.where(types: "Sorcery", color1: color)
-    sorceries = Card.where(types: "Sorcery", color1: color)
+  elsif Card.where(types: "Sorcery", color1: input)
+    sorceries = Card.where(types: "Sorcery", color1: input)
     puts "Results: #{sorceries.count}"
     puts ""
     puts "How many would you like to see?"
