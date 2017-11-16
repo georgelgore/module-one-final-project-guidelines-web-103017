@@ -107,7 +107,7 @@ def deck_builder_menu
   puts "Search Deckbuilder Menu:"
   puts "  -1. See Cards in Deck"
   puts "  -2. Add Card to Deck"
-  puts "  -3. Add Instant Cards"
+  puts "  -3. Add Land Cards"
   puts "  -4. Return to Decks List"
   puts ""
   puts "  Type 'exit' to quit or 'back' to go back at any time"
@@ -124,11 +124,12 @@ def deck_builder_menu_reader(input)
   when "2"
     add_card_to_deck
   when "3"
-    # add instant cards
+    add_land_card_to_deck
   when "4"
     puts ""
     puts "------------------------------------------------"
     puts ""
+    display_decks
   when "exit"
     exit
   when "back"
@@ -150,6 +151,7 @@ def view_deck_cards
   deck_builder_menu
 end
 
+# Add a card to the deck by name
 def add_card_to_deck
   puts ""
   puts "Add a card by name."
@@ -168,6 +170,36 @@ def add_card_to_deck
   end
   deck_builder_menu
 end
+
+# Add an instant card to the deck
+def add_land_card_to_deck
+  puts ""
+  puts "What types of Land Card would you like to add to the Deck?"
+  subtype = gets.chomp
+  if subtype.downcase == "back"
+    deck_builder_menu
+  end
+  puts ""
+  puts "How many?"
+  number = gets.chomp
+  if number.downcase == "back"
+    deck_builder_menu
+  end
+
+  if Card.find_by(types: "Land", subtype1: subtype)
+    card = Card.find_by(types: "Land", subtype1: subtype)
+    number.to_i.times do
+      DeckCard.create(deck_id: DECK.first.id, card_id: card.id)
+    end
+  else
+    puts "Sorry we could not find that card! Try again!"
+    puts ""
+    add_card_to_deck
+  end
+  deck_builder_menu
+
+end
+
 
 # Displays the user's decks
 def display_decks
