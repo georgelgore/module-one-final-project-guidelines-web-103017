@@ -402,6 +402,7 @@ def search_by_name(name)
     attr_duplicate?(card.color1, card.color2, "Color")
     puts "Type: #{card.types}"
     attr_duplicate?(card.subtype1, card.subtype2, "Subtype")
+    puts "Text: #{card.text}"
     puts "P/T: #{card.power}/#{card.toughness}"
 
     save_searched_card(card)

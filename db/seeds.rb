@@ -3,7 +3,7 @@ require 'json'
 require 'pry'
 
 
-    (201..311).each do |page_num|
+    (1..311).each do |page_num|
 
       url = "https://api.magicthegathering.io/v1/cards?page=#{page_num}"
       response = RestClient.get(url)
